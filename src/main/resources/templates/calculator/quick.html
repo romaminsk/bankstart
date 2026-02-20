@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head th:replace="~{fragments/layout :: head(${pageTitle})}">
+    <title>Быстрый расчёт | BankStart</title>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="flex-grow-1 py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                
+                <!-- Заголовок -->
+                <div class="text-center mb-4">
+                    <h1 class="h2">
+                        <i class="bi bi-lightning-charge text-primary me-2"></i>
+                        Быстрый расчёт
+                    </h1>
+                    <p class="text-muted">
+                        Всего 6 полей для первичной оценки вашего бизнеса
+                    </p>
+                </div>
+                
+                <!-- Форма -->
+                <div class="card shadow-sm">
+                    <div class="card-body p-4">
+                        
+                        <!--
+                        ОБУЧЕНИЕ: THYMELEAF ФОРМЫ
+                        ─────────────────────────────────────────────────────────────────
+                        
+                        th:object="${quickForm}" - привязка формы к DTO
+                        th:field="*{fieldName}" - привязка поля (name, id, value)
+                        th:errors="*{fieldName}" - ошибки валидации
+                        th:errorclass="is-invalid" - CSS класс при ошибке
+                        -->
+                        <form th:action="@{/calculator/quick/calculate}" 
+                              th:object="${quickForm}" 
+                              method="post" 
+                              class="needs-validation" 
+                              novalidate>
+                            
+                            <!-- Отрасль -->
+                            <div class="mb-4">
+                                <label for="industry" class="form-label fw-semibold">
+                                    <i class="bi bi-building me-1"></i>Отрасль бизнеса
+                                </label>
+                                <select th:field="*{industry}" 
+                                        class="form-select form-select-lg" 
+                                        id="industry" 
+                                        required>
+                                    <option value="">Выберите отрасль...</option>
+                                    <option value="Общепит">Общепит (кафе, рестораны)</option>
+                                    <option value="Розничная торговля">Розничная торговля</option>
+                                    <option value="Услуги">Услуги (салоны, ремонт)</option>
+                                    <option value="IT">ИТ/Разработка</option>
+                                    <option value="Производство">Производство</option>
+                                    <option value="Строительство">Строительство</option>
+                                    <option value="Другое">Другое</option>
+                                </select>
+                                <div th:if="${#fields.hasErrors('industry')}" class="invalid-feedback" th:errors="*{industry}"></div>
+                            </div>
+                            
+                            <!-- Выручка -->
+                            <div class="mb-4">
+                                <label for="monthlyRevenue" class="form-label fw-semibold">
+                                    <i class="bi bi-cash-coin me-1"></i>Среднемесячная выручка (BYN)
+                                </label>
+                                <div class="input-group input-group-lg">
+                                    <input type="number" 
+                                           th:field="*{monthlyRevenue}" 
+                                           class="form-control" 
+                                           id="monthlyRevenue" 
+                                           placeholder="10000"
+                                           min="100" 
+                                           max="10000000" 
+                                           step="100"
+                                           required>
+                                    <span class="input-group-text">BYN/мес</span>
+                                </div>
+                                <div class="form-text">Сколько денег приходит в среднем за месяц</div>
+                            </div>
+                            
+                            <!-- Постоянные расходы -->
+                            <div class="mb-4">
+                                <label for="fixedCosts" class="form-label fw-semibold">
+                                    <i class="bi bi-house-door me-1"></i>Постоянные расходы (BYN/мес)
+                                </label>
+                                <div class="input-group input-group-lg">
+                                    <input type="number" 
+                                           th:field="*{fixedCosts}" 
+                                           class="form-control" 
+                                           id="fixedCosts" 
+                                           placeholder="3000"
+                                           min="0" 
+                                           step="100"
+                                           required>
+                                    <span class="input-group-text">BYN/мес</span>
+                                </div>
+                                <div class="form-text">Аренда, зарплаты, коммунальные — то, что платите всегда</div>
+                            </div>
+                            
+                            <!-- Переменные расходы -->
+                            <div class="mb-4">
+                                <label for="variableCostsPercent" class="form-label fw-semibold">
+                                    <i class="bi bi-percent me-1"></i>Переменные расходы (% от выручки)
+                                </label>
+                                <div class="input-group input-group-lg">
+                                    <input type="number" 
+                                           th:field="*{variableCostsPercent}" 
+                                           class="form-control" 
+                                           id="variableCostsPercent" 
+                                           placeholder="30"
+                                           min="0" 
+                                           max="100" 
+                                           step="1"
+                                           required>
+                                    <span class="input-group-text">%</span>
+                                </div>
+                                <div class="form-text">Закупка товара, материалы — зависят от объёма продаж</div>
+                            </div>
+                            
+                            <!-- Начальный капитал -->
+                            <div class="mb-4">
+                                <label for="initialCapital" class="form-label fw-semibold">
+                                    <i class="bi bi-piggy-bank me-1"></i>Начальный капитал (BYN)
+                                </label>
+                                <div class="input-group input-group-lg">
+                                    <input type="number" 
+                                           th:field="*{initialCapital}" 
+                                           class="form-control" 
+                                           id="initialCapital" 
+                                           placeholder="5000"
+                                           min="0" 
+                                           step="100"
+                                           required>
+                                    <span class="input-group-text">BYN</span>
+                                </div>
+                                <div class="form-text">Деньги на счетах + наличные на старте</div>
+                            </div>
+                            
+                            <!-- Налоговая система -->
+                            <div class="mb-4">
+                                <label for="taxSystem" class="form-label fw-semibold">
+                                    <i class="bi bi-receipt me-1"></i>Система налогообложения
+                                </label>
+                                <select th:field="*{taxSystem}" class="form-select form-select-lg" id="taxSystem" required>
+                                    <option th:each="tax : ${taxSystems}" 
+                                            th:value="${tax}" 
+                                            th:text="${tax.displayName}"></option>
+                                </select>
+                            </div>
+                            
+                            <!-- Email -->
+                            <div class="mb-4">
+                                <label for="email" class="form-label fw-semibold">
+                                    <i class="bi bi-envelope me-1"></i>Email для результатов
+                                </label>
+                                <input type="email" 
+                                       th:field="*{email}" 
+                                       class="form-control form-control-lg" 
+                                       id="email" 
+                                       placeholder="your@email.com"
+                                       required>
+                            </div>
+                            
+                            <!-- Кнопка -->
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-calculator me-2"></i>Рассчитать
+                                </button>
+                            </div>
+                            
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Подсказка -->
+                <div class="alert alert-info mt-4" role="alert">
+                    <i class="bi bi-lightbulb me-2"></i>
+                    <strong>Совет:</strong> Для более точного расчёта с учётом сезонности 
+                    и роста, используйте <a href="#" class="alert-link">расширенный режим</a>.
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+
+</body>
+</html>

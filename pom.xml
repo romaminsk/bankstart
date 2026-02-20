@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <!--
+    ╔══════════════════════════════════════════════════════════════════════════════╗
+    ║                         BankStart MVP - pom.xml                               ║
+    ║                                                                               ║
+    ║  ПОЧЕМУ Maven?                                                                ║
+    ║  - Банковский стандарт (enterprise-grade)                                     ║
+    ║  - Богатая экосистема плагинов                                                ║
+    ║  - Лучшая интеграция с CI/CD системами                                        ║
+    ║  - XML-формат удобен для автоматизации и аудита                               ║
+    ║                                                                               ║
+    ║  ПОЧЕМУ Spring Boot 3.2.x?                                                    ║
+    ║  - Long-Term Support версия                                                   ║
+    ║  - Поддержка Java 21 (virtual threads, record patterns)                       ║
+    ║  - Улучшенная производительность                                              ║
+    ║  - Активная поддержка сообщества                                              ║
+    ╚══════════════════════════════════════════════════════════════════════════════╝
+    -->
+    
+    <!-- Наследование от Spring Boot Parent -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.2</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    
+    <!-- Идентификация проекта -->
+    <groupId>by.bank</groupId>
+    <artifactId>bankstart-mvp</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    
+    <name>BankStart MVP</name>
+    <description>
+        Калькулятор финансовой устойчивости для малого бизнеса.
+        Использует Monte Carlo симуляцию для оценки вероятности успеха бизнеса.
+    </description>
+    
+    <!-- Свойства проекта -->
+    <properties>
+        <!-- 
+        ПОЧЕМУ Java 21?
+        - LTS версия (Long-Term Support до 2029)
+        - Virtual Threads - масштабируемость без сложностей
+        - Record Patterns - чистый код для DTO
+        - Pattern Matching - более читаемый код
+        -->
+        <java.version>17</java.version>
+        
+        <!-- Кодировка проекта -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        
+        <!-- Версии зависимостей -->
+        <lombok.version>1.18.30</lombok.version>
+        <postgresql.version>42.7.1</postgresql.version>
+    </properties>
+    
+    <dependencies>
+        <!--
+        ╔═══════════════════════════════════════════════════════════════════════════╗
+        ║                        SPRING BOOT STARTERS                                ║
+        ║                                                                            ║
+        ║  "Starter" - это удобный набор зависимостей для конкретной задачи.         ║
+        ║  Spring Boot автоматически настраивает компоненты на основе стартеров.     ║
+        ╚═══════════════════════════════════════════════════════════════════════════╝
+        -->
+        
+        <!--
+        spring-boot-starter-web
+        ─────────────────────────
+        ЗАЧЕМ: Создание веб-приложений (REST API + MVC)
+        ВКЛЮЧАЕТ:
+        - Spring MVC (контроллеры, маппинги)
+        - Embedded Tomcat (встроенный сервер)
+        - Jackson (JSON сериализация)
+        - Validation support
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        
+        <!--
+        spring-boot-starter-data-jpa
+        ─────────────────────────────
+        ЗАЧЕМ: Работа с базой данных через ORM
+        ВКЛЮЧАЕТ:
+        - Hibernate (JPA провайдер)
+        - Spring Data JPA (репозитории)
+        - HikariCP (connection pool)
+        - Transaction management
+        
+        ПОЧЕМУ JPA, а не JDBC?
+        - Меньше boilerplate кода
+        - Автоматический маппинг объектов
+        - Кэширование
+        - Ленивая загрузка
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        
+        <!--
+        spring-boot-starter-thymeleaf
+        ──────────────────────────────
+        ЗАЧЕМ: Server-side HTML рендеринг
+        ПОЧЕМУ Thymeleaf?
+        - Natural templates (валидный HTML без движка)
+        - Интеграция со Spring Security
+        - i18n поддержка из коробки
+        - Фрагменты и layouts
+        
+        АЛЬТЕРНАТИВЫ: 
+        - Freemarker (быстрее, но менее читаемый)
+        - JSP (устаревший)
+        - React/Vue SPA (сложнее для MVP)
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        
+        <!--
+        spring-boot-starter-validation
+        ───────────────────────────────
+        ЗАЧЕМ: Валидация входных данных
+        ВКЛЮЧАЕТ:
+        - Jakarta Bean Validation 3.0
+        - Hibernate Validator
+        
+        ПРИМЕР ИСПОЛЬЗОВАНИЯ:
+        @NotNull, @Min, @Max, @Email, @Pattern, @Valid
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        
+        <!--
+        spring-boot-starter-actuator
+        ─────────────────────────────
+        ЗАЧЕМ: Мониторинг и health checks
+        ВКЛЮЧАЕТ:
+        - /actuator/health - проверка состояния
+        - /actuator/info - информация о приложении
+        - /actuator/metrics - метрики производительности
+        
+        ВАЖНО ДЛЯ БАНКА: PCI DSS требует мониторинга
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        
+        <!--
+        ╔═══════════════════════════════════════════════════════════════════════════╗
+        ║                           DATABASE DRIVERS                                 ║
+        ╚═══════════════════════════════════════════════════════════════════════════╝
+        -->
+        
+        <!--
+        PostgreSQL Driver
+        ─────────────────
+        ЗАЧЕМ: Подключение к production базе данных
+        
+        ПОЧЕМУ PostgreSQL?
+        - Open source, бесплатный
+        - Поддержка JSONB (гибкость без NoSQL)
+        - Расширенные индексы (GIN, GiST)
+        - Full-text search
+        - Транзакции ACID
+        - Отличная производительность
+        
+        SCOPE: runtime (не нужен при компиляции)
+        -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        
+        <!--
+        H2 Database
+        ───────────
+        ЗАЧЕМ: In-memory база для разработки и тестов
+        
+        ПРЕИМУЩЕСТВА:
+        - Не требует установки
+        - Быстрый запуск
+        - Веб-консоль для отладки
+        - Совместимость с PostgreSQL mode
+        
+        SCOPE: runtime (только для dev профиля)
+        -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        
+        <!--
+        ╔═══════════════════════════════════════════════════════════════════════════╗
+        ║                         DEVELOPER PRODUCTIVITY                             ║
+        ╚═══════════════════════════════════════════════════════════════════════════╝
+        -->
+        
+        <!--
+        Lombok
+        ──────
+        ЗАЧЕМ: Уменьшение boilerplate кода
+        
+        ГЕНЕРИРУЕТ:
+        - @Data: getters, setters, equals, hashCode, toString
+        - @Builder: паттерн Builder
+        - @NoArgsConstructor/@AllArgsConstructor: конструкторы
+        - @Slf4j: логгер
+        
+        ПОЧЕМУ?
+        - Entity класс: 20 полей = 100+ строк boilerplate
+        - С Lombok: 20 полей = 20 строк
+        
+        SCOPE: provided (только при компиляции, не в runtime)
+        -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <!--
+        spring-boot-devtools
+        ────────────────────
+        ЗАЧЕМ: Быстрая разработка
+        
+        ВКЛЮЧАЕТ:
+        - Automatic restart при изменении кода
+        - LiveReload для браузера
+        - Отключение кэширования шаблонов
+        
+        SCOPE: runtime, optional (не включается в production JAR)
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+        
+        <!--
+        ╔═══════════════════════════════════════════════════════════════════════════╗
+        ║                              TESTING                                       ║
+        ╚═══════════════════════════════════════════════════════════════════════════╝
+        -->
+        
+        <!--
+        spring-boot-starter-test
+        ────────────────────────
+        ЗАЧЕМ: Комплексное тестирование
+        
+        ВКЛЮЧАЕТ:
+        - JUnit 5 (основной фреймворк)
+        - Mockito (mock объекты)
+        - AssertJ (fluent assertions)
+        - Spring Test (интеграционные тесты)
+        - JsonPath (тестирование JSON)
+        
+        SCOPE: test (только для тестов)
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    
+    <!--
+    ╔═══════════════════════════════════════════════════════════════════════════════╗
+    ║                              BUILD CONFIGURATION                               ║
+    ╚═══════════════════════════════════════════════════════════════════════════════╝
+    -->
+    <build>
+        <plugins>
+            <!--
+            spring-boot-maven-plugin
+            ────────────────────────
+            ЗАЧЕМ: Создание исполняемого JAR
+            
+            КОМАНДЫ:
+            - mvn spring-boot:run (запуск)
+            - mvn package (создание JAR)
+            
+            РЕЗУЛЬТАТ:
+            - bankstart-mvp-1.0.0-SNAPSHOT.jar
+            - Можно запустить: java -jar bankstart-mvp.jar
+            -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <!-- Исключаем Lombok из финального JAR -->
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    
+</project>

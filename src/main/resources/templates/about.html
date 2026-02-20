@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head th:replace="~{fragments/layout :: head(${pageTitle})}">
+    <title>О проекте | BankStart</title>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="flex-grow-1 py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                
+                <h1 class="mb-4">О проекте BankStart</h1>
+                
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-bullseye text-primary me-2"></i>Цель</h5>
+                        <p class="card-text">
+                            BankStart — это инструмент для оценки финансовой устойчивости малого бизнеса.
+                            Мы помогаем предпринимателям понять вероятность успеха их бизнеса 
+                            на горизонте 12 месяцев.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-cpu text-primary me-2"></i>Метод Monte Carlo</h5>
+                        <p class="card-text">
+                            Мы используем метод Monte Carlo — статистическое моделирование,
+                            которое прогоняет 1000 вариантов будущего с учётом:
+                        </p>
+                        <ul>
+                            <li>Случайных колебаний выручки</li>
+                            <li>Сезонности бизнеса</li>
+                            <li>Налоговой нагрузки</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-stack text-primary me-2"></i>Технологии</h5>
+                        <ul>
+                            <li><strong>Backend:</strong> Java 21, Spring Boot 3.2</li>
+                            <li><strong>Frontend:</strong> Thymeleaf, Bootstrap 5, Chart.js</li>
+                            <li><strong>Database:</strong> PostgreSQL 15 (H2 для разработки)</li>
+                            <li><strong>Архитектура:</strong> Layered (Controller → Service → Repository)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+
+</body>
+</html>

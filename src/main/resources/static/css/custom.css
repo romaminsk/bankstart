@@ -1,0 +1,150 @@
+/*
+ * BankStart MVP - Custom CSS
+ * 
+ * ОБУЧЕНИЕ: CSS ОРГАНИЗАЦИЯ
+ * ───────────────────────────────────────────────────────
+ * 
+ * ПОЧЕМУ Bootstrap + Custom CSS?
+ * 
+ * Bootstrap даёт:
+ * - Готовую сетку (grid)
+ * - Компоненты (buttons, cards, forms)
+ * - Responsive по умолчанию
+ * 
+ * Custom CSS добавляет:
+ * - Брендинг (colors, fonts)
+ * - Кастомные стили
+ * - Переопределения Bootstrap
+ */
+
+/* ==========================================================================
+   CSS VARIABLES (Custom Properties)
+   ========================================================================== */
+
+:root {
+    /* Брендовые цвета */
+    --bs-primary: #0d6efd;
+    --bs-primary-rgb: 13, 110, 253;
+    
+    /* Цвета рисков */
+    --risk-low: #28a745;
+    --risk-medium: #ffc107;
+    --risk-high: #dc3545;
+    
+    /* Шрифты */
+    --font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* ==========================================================================
+   BASE STYLES
+   ========================================================================== */
+
+body {
+    font-family: var(--font-family-base);
+    background-color: #f8f9fa;
+}
+
+/* ==========================================================================
+   HERO SECTION
+   ========================================================================== */
+
+.hero-section {
+    background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='https://static.vecteezy.com/system/resources/thumbnails/035/666/129/small/abstract-geometric-seamless-fabric-textile-pattern-background-free-vector.jpg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
+}
+
+.hero-illustration {
+    padding: 2rem;
+}
+
+/* ==========================================================================
+   CARDS
+   ========================================================================== */
+
+.card {
+    border-radius: 0.75rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+/* ==========================================================================
+   FORMS
+   ========================================================================== */
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
+}
+
+/* ==========================================================================
+   RISK INDICATORS
+   ========================================================================== */
+
+.risk-low {
+    background-color: var(--risk-low);
+    color: white;
+}
+
+.risk-medium {
+    background-color: var(--risk-medium);
+    color: #212529;
+}
+
+.risk-high {
+    background-color: var(--risk-high);
+    color: white;
+}
+
+/* ==========================================================================
+   UTILITIES
+   ========================================================================== */
+
+.text-gradient {
+    background: linear-gradient(135deg, #0d6efd, #6610f2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+.footer {
+    background-color: #f8f9fa;
+}
+
+.footer a:hover {
+    color: var(--bs-primary) !important;
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .hero-section {
+        text-align: center;
+    }
+    
+    .hero-section h1 {
+        font-size: 2rem;
+    }
+}

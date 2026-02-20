@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head th:replace="~{fragments/layout :: head(${pageTitle})}">
+    <title>Отказ от ответственности | BankStart</title>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="flex-grow-1 py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                
+                <h1 class="mb-4">
+                    <i class="bi bi-exclamation-triangle text-warning me-2"></i>
+                    Отказ от ответственности
+                </h1>
+                
+                <div class="alert alert-warning">
+                    <strong>Важно!</strong> Пожалуйста, внимательно прочитайте эту информацию перед использованием калькулятора.
+                </div>
+                
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5>Информационный характер</h5>
+                        <p>
+                            Результаты калькулятора BankStart носят <strong>исключительно информационный характер</strong>
+                            и не являются:
+                        </p>
+                        <ul>
+                            <li>Финансовой рекомендацией</li>
+                            <li>Гарантией получения кредита</li>
+                            <li>Обещанием результата</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5>Ограничения модели</h5>
+                        <p>Модель не учитывает:</p>
+                        <ul>
+                            <li>Макроэкономические кризисы</li>
+                            <li>Форс-мажорные обстоятельства</li>
+                            <li>Индивидуальные особенности бизнеса</li>
+                        </ul>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+
+</body>
+</html>

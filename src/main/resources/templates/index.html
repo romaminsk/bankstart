@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<!--
+╔═══════════════════════════════════════════════════════════════════════════════════════════╗
+║                              ГЛАВНАЯ СТРАНИЦА (LANDING PAGE)                               ║
+╠═══════════════════════════════════════════════════════════════════════════════════════════╣
+║                                                                                            ║
+║  ОБУЧЕНИЕ: THYMELEAF СИНТАКСИС                                                             ║
+║  ───────────────────────────────────────────────────────────────────────────────           ║
+║                                                                                            ║
+║  th:text="${variable}"     - Вывод текста (экранирует HTML)                                ║
+║  th:utext="${variable}"    - Вывод HTML без экранирования                                  ║
+║  th:href="@{/path}"        - Ссылка (добавляет context path)                               ║
+║  th:src="@{/path}"         - Источник (для img, script)                                    ║
+║  th:if="${condition}"      - Условный рендеринг                                            ║
+║  th:each="item : ${list}"  - Цикл                                                          ║
+║  th:insert="~{file :: fragment}" - Вставка фрагмента                                       ║
+║  th:replace="~{file :: fragment}" - Замена элемента фрагментом                             ║
+║                                                                                            ║
+╚═══════════════════════════════════════════════════════════════════════════════════════════╝
+-->
+<head th:replace="~{fragments/layout :: head(${pageTitle})}">
+    <title>BankStart</title>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<!-- Навигация -->
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<!-- Hero Section -->
+<section class="hero-section bg-primary text-white py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">
+                    Оцените жизнеспособность<br>вашего бизнеса
+                </h1>
+                <p class="lead mb-4">
+                    Используем метод <strong>Monte Carlo</strong> для расчёта вероятности 
+                    успеха вашего бизнеса на 12 месяцев вперёд.
+                </p>
+                <div class="d-flex gap-3">
+                    <a th:href="@{/calculator/quick}" class="btn btn-light btn-lg px-4">
+                        <i class="bi bi-calculator me-2"></i>Рассчитать бесплатно
+                    </a>
+                    <a th:href="@{/about}" class="btn btn-outline-light btn-lg px-4">
+                        Узнать больше
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center mt-4 mt-lg-0">
+                <!-- Иллюстрация -->
+                <div class="hero-illustration">
+                    <i class="bi bi-graph-up-arrow display-1 opacity-75"></i>
+                    <div class="mt-3">
+                        <span class="badge bg-light text-primary fs-5 me-2">1000 симуляций</span>
+                        <span class="badge bg-light text-primary fs-5">12 месяцев</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Как это работает -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Как это работает?</h2>
+        
+        <div class="row g-4">
+            <!-- Шаг 1 -->
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon bg-primary bg-gradient text-white rounded-circle mb-3 mx-auto d-flex align-items-center justify-content-center" 
+                             style="width: 64px; height: 64px;">
+                            <i class="bi bi-pencil-square fs-3"></i>
+                        </div>
+                        <h5 class="card-title">1. Введите данные</h5>
+                        <p class="card-text text-muted">
+                            Заполните форму: выручка, расходы, начальный капитал. 
+                            Быстрый режим — всего 5 полей!
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Шаг 2 -->
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon bg-primary bg-gradient text-white rounded-circle mb-3 mx-auto d-flex align-items-center justify-content-center" 
+                             style="width: 64px; height: 64px;">
+                            <i class="bi bi-cpu fs-3"></i>
+                        </div>
+                        <h5 class="card-title">2. Monte Carlo</h5>
+                        <p class="card-text text-muted">
+                            Система прогоняет 1000 сценариев с учётом случайных 
+                            колебаний выручки и сезонности.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Шаг 3 -->
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon bg-primary bg-gradient text-white rounded-circle mb-3 mx-auto d-flex align-items-center justify-content-center" 
+                             style="width: 64px; height: 64px;">
+                            <i class="bi bi-graph-up fs-3"></i>
+                        </div>
+                        <h5 class="card-title">3. Получите результат</h5>
+                        <p class="card-text text-muted">
+                            Узнайте вероятность успеха, критические месяцы 
+                            и получите рекомендации.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Что покажет калькулятор -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">Что вы узнаете?</h2>
+        
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="d-flex align-items-start">
+                    <i class="bi bi-percent text-primary fs-2 me-3"></i>
+                    <div>
+                        <h6 class="mb-1">Вероятность успеха</h6>
+                        <p class="small text-muted mb-0">
+                            Процент сценариев, где бизнес не уходит в минус за 12 месяцев
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3">
+                <div class="d-flex align-items-start">
+                    <i class="bi bi-calendar-week text-primary fs-2 me-3"></i>
+                    <div>
+                        <h6 class="mb-1">Критический месяц</h6>
+                        <p class="small text-muted mb-0">
+                            Когда cash flow будет минимальным и нужна подушка безопасности
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3">
+                <div class="d-flex align-items-start">
+                    <i class="bi bi-bar-chart text-primary fs-2 me-3"></i>
+                    <div>
+                        <h6 class="mb-1">3 сценария</h6>
+                        <p class="small text-muted mb-0">
+                            Пессимистичный (P10), средний (P50) и оптимистичный (P90)
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3">
+                <div class="d-flex align-items-start">
+                    <i class="bi bi-shield-check text-primary fs-2 me-3"></i>
+                    <div>
+                        <h6 class="mb-1">Уровень риска</h6>
+                        <p class="small text-muted mb-0">
+                            Низкий, средний или высокий — для принятия решений
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-primary text-white text-center">
+    <div class="container">
+        <h2 class="mb-3">Готовы оценить свой бизнес?</h2>
+        <p class="lead mb-4">Бесплатно. Без регистрации. Результат за 10 секунд.</p>
+        <a th:href="@{/calculator/quick}" class="btn btn-light btn-lg px-5">
+            <i class="bi bi-rocket-takeoff me-2"></i>Начать расчёт
+        </a>
+    </div>
+</section>
+
+<!-- Disclaimer -->
+<section class="py-4 bg-warning bg-opacity-10">
+    <div class="container">
+        <div class="d-flex align-items-center justify-content-center">
+            <i class="bi bi-exclamation-triangle text-warning fs-4 me-3"></i>
+            <p class="mb-0 small">
+                <strong>Важно:</strong> Результаты калькулятора носят информационный характер 
+                и не являются финансовой рекомендацией. 
+                <a th:href="@{/disclaimer}" class="text-decoration-none">Подробнее</a>
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Футер -->
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+<!-- Скрипты -->
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+
+</body>
+</html>
